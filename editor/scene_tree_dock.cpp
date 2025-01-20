@@ -2979,6 +2979,7 @@ void SceneTreeDock::_create() {
 		EditorUndoRedoManager *undo_redo = EditorUndoRedoManager::get_singleton();
 		undo_redo->create_action_for_history(TTR("Reparent to New Node"), editor_data->get_current_edited_scene_history_id());
 
+		int topIndex = top_node->get_index(false);
 		Node *last_created = _do_create(parent);
 
 		Vector<Node *> nodes;
@@ -3023,7 +3024,7 @@ void SceneTreeDock::_create() {
 			}
 		}
 
-		_do_reparent(last_created, -1, nodes, true);
+		_do_reparent(last_created, topIndex, nodes, true);
 
 		if (only_one_top_node) {
 			undo_redo->add_do_method(parent, "move_child", last_created, original_position);
